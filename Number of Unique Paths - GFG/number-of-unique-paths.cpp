@@ -11,9 +11,9 @@ class Solution
     public:
     int memoization(int a, int b,vector<vector<int>> &dp)
     {
+        if(a==0 && b== 0)return 1;
+        if(a<0 || b<0) return 0;
         if(dp[a][b]!=-1)return dp[a][b];
-        if(a==1 && b== 1)return 1;
-        if(a<1 || b<1) return 0;
         int up = memoization(a-1,b,dp);
         int left = memoization(a,b-1,dp);
         return dp[a][b] = up+left;
@@ -21,8 +21,8 @@ class Solution
     //Function to find total number of unique paths.
     int NumberOfPath(int a, int b)
     {
-        vector<vector<int>> dp(a+1,vector<int>(b+1,-1));
-        return memoization(a,b,dp);
+        vector<vector<int>> dp(a,vector<int>(b,-1));
+        return memoization(a-1,b-1,dp);
        
     }
 };
