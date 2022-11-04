@@ -1,36 +1,41 @@
 class Solution {
 public:
-      int Tablulation(vector<vector<int>> &grid)
+ int  SpaceOptimazation(int n, int m, vector<vector<int>> &matrix)
     {
-        int n = grid.size();
-        int m = grid[0].size();
-        vector<vector<int>> dp1(n, vector<int>(m, 0));
+        vector<int> prev(m, 0);
         for (int i = 0; i < n; i++)
         {
+            vector<int> temp(m, 0);
             for (int j = 0; j < m; j++)
             {
                 if (i == 0 && j == 0)
-                    dp1[i][j] = grid[i][j];
+                    temp[j] = matrix[i][j];
                 else
                 {
-                    int up, left;
-                    up = left =grid[i][j];
+
+                    int up = matrix[i][j];
                     if (i > 0)
-                        up += dp1[i - 1][j];
+                        up += prev[j];
                     else
                         up += 1e9;
+
+                    int left = matrix[i][j];
                     if (j > 0)
-                        left += dp1[i][j - 1];
+                        left += temp[j - 1];
                     else
                         left += 1e9;
-                    dp1[i][j] = min(up,left);
+
+                    temp[j] = min(up, left);
                 }
-                
             }
+            prev = temp;
         }
-        return dp1[n - 1][m - 1];
+
+        return prev[m - 1];
     }
     int minPathSum(vector<vector<int>>& grid) {
-        return  Tablulation(grid);
+        int n = grid.size();
+        int m = grid[0].size();
+        return  SpaceOptimazation(n,m,grid);
     }
 };
