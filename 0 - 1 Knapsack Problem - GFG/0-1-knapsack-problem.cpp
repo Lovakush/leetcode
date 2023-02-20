@@ -10,14 +10,14 @@ class Solution
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-      vector<int> prev(W+1,0), curr(W+1,0);
+      vector<int> prev(W+1,0);
       for(int w=wt[0];w<=W;w++)
         {
             prev[w] = val[0];
         }
       for(int ind=1;ind<n;ind++)
       {
-          for(int w=0;w<=W;w++)
+          for(int w=W;w>=0;w--)
           {
                 int notTake = 0 + prev[w];
                 int Take = INT_MIN;
@@ -25,9 +25,8 @@ class Solution
                 {
                     Take = val[ind] + prev[w-wt[ind]];
                 }
-                curr[w] = max(notTake,Take);
+                prev[w] = max(notTake,Take);
           }
-          prev = curr;
       }
       return prev[W];
     }
