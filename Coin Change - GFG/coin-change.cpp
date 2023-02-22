@@ -6,21 +6,24 @@ using namespace std;
 class Solution {
   public:
     long long int count(int coins[], int N, int sum) {
-        vector<vector<long>> dp(N,vector<long>(sum+1,0));
+        // vector<vector<long>> dp(N,vector<long>(sum+1,0));
+        // further space optimized using one-D array
+        vector<long> prev(sum+1,0), curr(sum+1,0);
         for(int s=0;s<=sum;s++)
-            dp[0][s] = (s%coins[0]==0);
+            prev[s] = (s%coins[0]==0);
         for(int ind=1;ind<N;ind++)
         {
             for(int s=0;s<=sum;s++)
             {
-                long int notTake = dp[ind-1][s];
+                long int notTake = prev[s];
                 long int Take = 0;
                 if(coins[ind]<=s)
-                    Take = dp[ind][s-coins[ind]];
-                dp[ind][s] = notTake + Take; 
+                    Take = curr[s-coins[ind]];
+                curr[s] = notTake + Take; 
             }
+            prev = curr;
         }
-        return dp[N-1][sum];
+        return prev[sum];
     }
 };
 
