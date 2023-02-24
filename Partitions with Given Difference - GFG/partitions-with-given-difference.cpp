@@ -22,8 +22,7 @@ class Solution {
     }
     int countPartitions(int n, int d, vector<int>& arr) {
         int sum =0;
-        for(int i=0;i<n;i++){sum+=arr[i];}
-     //   sum=accumulate(arr.begin(),arr.end(),sum);
+      sum=accumulate(arr.begin(),arr.end(),sum);
         if((sum-d)<0 || (sum-d)%2!=0){return 0;}
         int target= (sum-d)/2;
         vector<vector<int>>dp(n,vector<int>(target+1,-1));
