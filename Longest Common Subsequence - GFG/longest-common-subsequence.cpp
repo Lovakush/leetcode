@@ -9,18 +9,37 @@ using namespace std;
 class Solution
 {
     public:
-    //Function to find the length of longest common subsequence in two strings.
-    int f(int i, int j,string s1, string s2,vector<vector<int>> &dp)
+    
+    // memoization 
+    int f(int i, int j, string t1, string t2,vector<vector<int>> &dp)
     {
         if(i<0 || j<0)return 0;
         if(dp[i][j]!=-1)return dp[i][j];
-        if(s1[i]==s2[j])return dp[i][j]  = 1+f(i-1,j-1,s1,s2,dp);
-        return dp[i][j] = max(f(i-1,j,s1,s2,dp),f(i,j-1,s1,s2,dp));
+        if(t1[i]==t2[j]) return dp[i][j] =  1 + f(i-1,j-1,t1,t2,dp);
+        return dp[i][j] = max(f(i,j-1,t1,t2,dp),f(i-1,j,t1,t2,dp));
     }
     int lcs(int x, int y, string s1, string s2)
     {
-        vector<vector<int>> dp(x,vector<int>(y,-1));
-        return f(x-1,y-1,s1,s2,dp);
+        // memoization 
+        
+        // int i = s1.size();
+        // int j = s2.size();
+        // vector<vector<int>> dp(i,vector<int>(j,-1));
+        // return f(i,j,s1,s2,dp);
+        
+        // tabulation 
+        vector<vector<int>> dp(x+1,vector<int>(y+1,0));
+        for(int i = 0 ;i<=x;i++)dp[i][0] = 0;
+        for(int j=0;j<=y;j++)dp[0][j] = 0;
+        for(int i=1;i<=x;i++)
+        {
+            for(int j = 1;j<=y;j++)
+            {
+                if(s1[i-1]==s2[j-1]) dp[i][j] =  1 + dp[i-1][j-1];
+                else dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
+            }
+        }
+        return dp[x][y];
     }
 };
 
