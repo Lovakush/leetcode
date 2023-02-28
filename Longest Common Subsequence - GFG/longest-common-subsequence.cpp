@@ -9,37 +9,21 @@ using namespace std;
 class Solution
 {
     public:
-    
-    // memoization 
-    int f(int i, int j, string t1, string t2,vector<vector<int>> &dp)
-    {
-        if(i<0 || j<0)return 0;
-        if(dp[i][j]!=-1)return dp[i][j];
-        if(t1[i]==t2[j]) return dp[i][j] =  1 + f(i-1,j-1,t1,t2,dp);
-        return dp[i][j] = max(f(i,j-1,t1,t2,dp),f(i-1,j,t1,t2,dp));
-    }
     int lcs(int x, int y, string s1, string s2)
     {
-        // memoization 
-        
-        // int i = s1.size();
-        // int j = s2.size();
-        // vector<vector<int>> dp(i,vector<int>(j,-1));
-        // return f(i,j,s1,s2,dp);
-        
-        // tabulation 
-        vector<vector<int>> dp(x+1,vector<int>(y+1,0));
-        for(int i = 0 ;i<=x;i++)dp[i][0] = 0;
-        for(int j=0;j<=y;j++)dp[0][j] = 0;
+     
+        vector<int> prev(y+1,0) ,curr(y+1,0);
+        for(int i = 0 ;i<=y;i++)prev[i] = 0;
         for(int i=1;i<=x;i++)
         {
             for(int j = 1;j<=y;j++)
             {
-                if(s1[i-1]==s2[j-1]) dp[i][j] =  1 + dp[i-1][j-1];
-                else dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
+                if(s1[i-1]==s2[j-1]) curr[j] =  1 + prev[j-1];
+                else curr[j] = max(curr[j-1],prev[j]);
             }
+            prev = curr;
         }
-        return dp[x][y];
+        return prev[y];
     }
 };
 
