@@ -4,6 +4,7 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
+    private:
     vector<vector<int>> bfs(vector<vector<int>> ans,vector<vector<int>> image,
         int row,int col,int newColor,int delrow[],int delcol[])
     {
@@ -22,7 +23,6 @@ class Solution {
             {
                 int nrow = row + delrow[i];
                 int ncol = col + delcol[i];
-                // update 
                 if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && image[nrow][ncol]==init && ans[nrow][ncol]!=newColor)
                 {
                     ans[nrow][ncol] = newColor;
@@ -42,7 +42,8 @@ public:
         int delrow[] = {-1,0,1,0};
         int delcol[] = {0,1,0,-1};
         return bfs(ans,image,sr,sc,newColor,delrow,delcol);
-}
+        
+    }
 };
 
 //{ Driver Code Starts.
