@@ -32,21 +32,21 @@ class Solution {
     }
     public:
     int numProvinces(vector<vector<int>> adj, int V) {
-        vector<int> vis(V+1,0);
-        vector<int> ad[V+1];
+        vector<int> vis(V,0);
+        vector<int> ad[V];
         for(int i=0;i<V;i++)
         {
             for(int j=0;j<V;j++)
             {
                 if(adj[i][j]==1 && i!=j)
                 {
-                    ad[i+1].push_back(j+1);
-                    ad[j+1].push_back(i+1);
+                    ad[i].push_back(j);
+                    // ad[j].push_back(i);
                 }
             }
         }
         int count = 0;
-        for(int i=1;i<=V;i++)
+        for(int i=0;i<V;i++)
         {
             if(!vis[i])
             {
